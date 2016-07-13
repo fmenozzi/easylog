@@ -25,12 +25,21 @@ void easylog_init(FILE* file) {
     easylog_global_log.file = file;
 }
 
+void easylog_log_file(loglevel level, FILE* file, const char* fmt, ...) {
+    va_list argptr;
+    va_start(argptr, fmt);
+    fprintf(file, "%s: ", loglevel_str(level));
+    vfprintf(file, fmt, argptr);
+    va_end(argptr);
+}
+
 void easylog_log(loglevel level, const char* fmt, ...) {
     va_list argptr;
     va_start(argptr, fmt);
     fprintf(easylog_global_log.file, "%s: ", loglevel_str(level));
     vfprintf(easylog_global_log.file, fmt, argptr);
     va_end(argptr);
+
 }
 
 void easylog_destroy() {

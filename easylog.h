@@ -19,8 +19,9 @@ typedef struct {
     FILE* file;
 } logstruct;
 
-void easylog_init(FILE* file);
-void easylog_log(loglevel level, const char* fmt, ...);
+void easylog_init(FILE*);
+void easylog_log(loglevel, const char* fmt, ...);
+void easylog_log_file(loglevel, FILE*, const char* fmt, ...);
 void easylog_destroy();
 
 #define EASYLOG_INIT                        \
