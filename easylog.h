@@ -12,10 +12,19 @@ typedef enum {
     DEBUG,
     WARNING,
     ERROR,
-    FATAL, 
+    FATAL
 } loglevel;
 
-void easylog_log(loglevel level, FILE* file, const char* fmt, ...);
+typedef struct {
+    FILE* file;
+} logstruct;
+
+void easylog_init(FILE* file);
+void easylog_log(loglevel level, const char* fmt, ...);
+void easylog_destroy();
+
+#define EASYLOG_INIT                        \
+    extern logstruct easylog_global_log;    \
 
 #ifdef __cplusplus
 }
