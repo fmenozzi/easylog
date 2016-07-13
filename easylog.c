@@ -40,7 +40,15 @@ void easylog_log(loglevel level, const char* fmt, ...) {
     va_start(args, fmt);
     easylog_log_vararg(level, easylog_global_log.file, fmt, args);
     va_end(args);
+}
 
+void easylog_config_logfile(FILE* file) {
+    if (file) {
+        if (easylog_global_log.file) {
+            fclose(easylog_global_log.file);
+            easylog_global_log.file = file;
+        }
+    }
 }
 
 void easylog_destroy() {

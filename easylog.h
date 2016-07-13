@@ -22,6 +22,7 @@ typedef struct {
 void easylog_init(FILE*);
 void easylog_log(loglevel, const char* fmt, ...);
 void easylog_log_file(loglevel, FILE*, const char* fmt, ...);
+void easylog_config_logfile(FILE*);
 void easylog_destroy();
 
 #define EASYLOG_INIT                        \
