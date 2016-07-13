@@ -22,5 +22,9 @@ int main() {
     easylog_config_logfile(fp);
     
     easylog_log(INFO, "Hello from test.txt!");
+
+    easylog_destroy();
+
+    return 0;
 }
 ```
