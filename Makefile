@@ -43,4 +43,4 @@ test-clangpp:
 	@$(CLANGPP_RELEASE) $(CMD)
 
 clean:
-	@rm -f test test.txt
+	@rm -f test test*.txt
