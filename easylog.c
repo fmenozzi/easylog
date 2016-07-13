@@ -18,7 +18,9 @@ static const char* loglevel_str(loglevel level) {
 }
 
 void easylog_init(FILE* file) {
-    easylog_global_log.file = file;
+    if (file) {
+        easylog_global_log.file = file;
+    }
 }
 
 static void easylog_log_vararg(loglevel level, FILE* file, const char* fmt, va_list args) {
@@ -29,17 +31,21 @@ static void easylog_log_vararg(loglevel level, FILE* file, const char* fmt, va_l
 }
 
 void easylog_log_file(loglevel level, FILE* file, const char* fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    easylog_log_vararg(level, file, fmt, args);
-    va_end(args);
+    if (file && fmt) {
+        va_list args;
+        va_start(args, fmt);
+        easylog_log_vararg(level, file, fmt, args);
+        va_end(args);
+    }
 }
 
 void easylog_log(loglevel level, const char* fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    easylog_log_vararg(level, easylog_global_log.file, fmt, args);
-    va_end(args);
+    if (fmt) {
+        va_list args;
+        va_start(args, fmt);
+        easylog_log_vararg(level, easylog_global_log.file, fmt, args);
+        va_end(args);
+    }
 }
 
 void easylog_config_logfile(FILE* file) {
