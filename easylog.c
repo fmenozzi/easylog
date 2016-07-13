@@ -1,10 +1,8 @@
 #include "easylog.h"
 
+#include <stdlib.h>
 #include <stdarg.h>
-
-#define EASYLOG_LOG_VARARG(loglevel, file, fmt, args)   \
-    fprintf(file, "%s: ", loglevel_str(level));         \
-    vfprintf(file, fmt, args);                          \
+#include <string.h>
 
 logstruct easylog_global_log;
 
@@ -23,17 +21,24 @@ void easylog_init(FILE* file) {
     easylog_global_log.file = file;
 }
 
+static void easylog_log_vararg(loglevel level, FILE* file, const char* fmt, va_list args) {
+    char newfmt[EASYLOG_MAX_LINE_LEN];
+
+    snprintf(newfmt, EASYLOG_MAX_LINE_LEN, "%s: %s\n", loglevel_str(level), fmt);
+    vfprintf(file, newfmt, args);
+}
+
 void easylog_log_file(loglevel level, FILE* file, const char* fmt, ...) {
     va_list args;
     va_start(args, fmt);
-    EASYLOG_LOG_VARARG(level, file, fmt, args);
+    easylog_log_vararg(level, file, fmt, args);
     va_end(args);
 }
 
 void easylog_log(loglevel level, const char* fmt, ...) {
     va_list args;
     va_start(args, fmt);
-    EASYLOG_LOG_VARARG(level, easylog_global_log.file, fmt, args);
+    easylog_log_vararg(level, easylog_global_log.file, fmt, args);
     va_end(args);
 
 }

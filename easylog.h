@@ -27,6 +27,10 @@ void easylog_destroy();
 #define EASYLOG_INIT                        \
     extern logstruct easylog_global_log;    \
 
+#ifndef EASYLOG_MAX_LINE_LEN
+    #define EASYLOG_MAX_LINE_LEN 256
+#endif
+
 #ifdef __cplusplus
 }
 #endif
